@@ -1,0 +1,111 @@
+<div class="container"></div>
+  <div class="row">
+    <h1>Formulário de cadastro</h1>
+  </div>
+
+  <div class="row">
+    <form [formGroup]="form">
+      <div class="col- lg-2 col-sm-12 principal">
+        <p>
+          <label for="nome">Nome:</label>
+          <br>
+          <input type="text>" id="nome" placeholder="Informe seu nome" formControlName="nome">
+          <span *ngIf="form.controls.nome.touched && form.controls.nome.errors?.required">
+            Nome é obrigatório.
+          </span>
+          <span class="invalid-feedback"
+                *ngIf="form.controls.nome.touched && form.controls.nome.errors?.minlength">
+            Nome deve conter no mínimo 5 letras.
+          </span>
+        </p>
+        <p>
+          <label for="email">Email:</label>
+          <br>
+          <input type="email" id="email" placeholder="Informe seu email" formControlName="email">
+          <span *ngIf="emailErrorMsg()">
+            Email é obrigatório.
+          </span>
+        </p>
+        <p>
+          <label for="cpf">CPF:</label>
+          <br>
+          <input type="text" id="cpf" formControlName="cpf" maxlength="14" mascara="999.999.999-99">
+          <span *ngIf="form.controls.cpf.touched && form.controls.cpf.errors?.required">
+            CPF é obrigatório.
+          </span>
+          <span *ngIf="form.controls.cpf.touched && form.controls.cpf.errors?.cpf">
+            CPF inválido.
+          </span>
+        </p>
+        <p>
+          <label for="data-nascimento">Data de nascimento:</label>
+          <br>
+          <input type="text" id="data-nascimento" formControlName="dataNascimento" mascara="99/99/9999">
+        </p>
+        <p>
+          <label for="senha">Senha:</label>
+          <br>
+          <input type="password" id="senha" formControlName="senha">
+        </p>
+        <p>
+          <label for="estado">Estado</label>
+          <br>
+          <select id="estado" (change)="listarCidades($event)" formControlName="estado">
+            <option value="">Selecione um estado</option>
+            <option *ngFor="let estado of estados" [value]="estado.sigla">
+              {{ estado.sigla }} - {{ estado.nome }}
+            </option>
+          </select>
+        </p>
+        <p>
+          <label for="cidade">Cidade</label>
+          <br>
+          <select id="cidade" formControlName="cidade">
+            <option value="">Selecione uma Cidade</option>
+            <option *ngFor="let cidade   of cidades" [value]="cidade">
+              {{ cidade }}
+            </option>
+          </select>
+        </p>
+
+        <div class="form-check form-switch">
+          <input [ngClass]="cssValidacao('nome')" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" id="checkbox"
+            formControlName="aceitarContrato">
+          <label class="form-check-label" for="flexSwitchCheckDefault">Aceitar o contrato</label>
+        </div>
+
+        <p>
+          Linguagem favorita:
+          <br>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="linguagem" id="html" value="option2"
+            formControlName="linguagem">
+          <label class="form-check-label" for="html">HTML</label>
+          <br>
+          <input class="form-check-input" type="radio" name="linguagem" id="css" value="CSS"
+            formControlName="linguagem">
+          <label class="form-check-label" for="css">CSS</label>
+          <br>
+          <input class="form-check-input" type="radio" name="linguagem" id="javascript" value="JavaScript"
+            formControlName="linguagem">
+          <label class="form-check-label" for="javascript">JavaScript</label>
+          <br>
+
+        </div>
+
+
+
+        <p>
+          <label for="comentario">Comentário:</label>
+          <br>
+          <textarea id="comentario" cols="50" rows="10" formControlName="comentario"></textarea>
+        </p>
+        <p>
+          <input type="submit" class="btn btn-success" value="Cadastrar" (click)="cadastrar()"
+            [disabled]="form.invalid">
+          <input type="reset" class="btn btn-danger" value="Limpar" (click)="limparFormulario()">
+        </p>
+      </div>
+    </form>
+  </div>
